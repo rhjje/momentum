@@ -6,11 +6,91 @@ const focus = document.querySelector('.focus');
 const quoteText = document.querySelector('.quote');
 const author = document.querySelector('.author');
 const button = document.querySelector('.refresh-quote');
+const slideLeft = document.querySelector('.slide-left');
+const slideRight = document.querySelector('.slide-right');
+const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+const city = document.querySelector('.city');
 
-let arrImages = ['01', '02', '03', '04', '05',
+const arrImages = ['01', '02', '03', '04', '05',
     '06', '07', '08', '09', '10', '11', '12', '13',
-    '14', '15', '16', '17', '18', '19', 
-    '20'].sort(() => Math.random() - 0.5);
+    '14', '15', '16', '17', '18', '19', '20'];
+
+function makeDayCollection(arr) {
+    arr.sort(() => Math.random() - 0.5);
+    let dailyCollections = [];
+    for (let i = 0; i < 24; i++) {
+        if (i < 6) {
+            dailyCollections.push(`url("assets/images/night/${arrImages[i % 6]}.jpg`);
+        } else if (i < 12) {
+            dailyCollections.push(`url("assets/images/morning/${arrImages[i % 6]}.jpg`);
+        } else if (i < 18) {
+            dailyCollections.push(`url("assets/images/day/${arrImages[i % 6]}.jpg`);
+        } else {
+            dailyCollections.push(`url("assets/images/evening/${arrImages[i % 6]}.jpg`); 
+        }
+    }
+    
+    return dailyCollections;
+}
+
+let dailyCollections = makeDayCollection(arrImages);
+
+function setBackground() {
+    let today = new Date();
+    let hour = today.getHours();
+    document.body.style.backgroundImage = dailyCollections[hour];
+    document.body.style.color = 'white';
+    if (hour < 6) {
+        greeting.textContent = 'Good Night, ';
+    } else if (hour < 12) {
+        greeting.textContent = 'Good Morning, ';
+    } else if (hour < 18) {
+        greeting.textContent = 'Good Afternoon, ';
+    } else {
+        greeting.textContent = 'Good Evening, ';
+    }
+}
+
+setBackground();
+
+function setTime() {
+    let today = new Date();
+    let min = today.getMinutes();
+    if (min === 0) {
+        setBackground();
+    } 
+
+    setTimeout(setTime, 1000);
+}
+
+setTime();
+
+let count = 0;
+
+slideLeft.addEventListener('click', function() {
+    count--; 
+    setBackgroundSliders();
+});
+
+slideRight.addEventListener('click', function() {
+    count++; 
+    setBackgroundSliders();
+});
+
+function setBackgroundSliders() {
+    let today = new Date();
+    let hour = today.getHours();
+    if (hour + count < 0) {
+        count = 23 - hour;
+    }
+    if (hour + count > 23) {
+        count = -hour;
+    }
+
+    document.body.style.backgroundImage = dailyCollections[hour + count];
+}
 
 function showTime() {
     const monthNames = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
@@ -33,53 +113,27 @@ function addZero(n) {
     return (+n < 10 ? '0' : '') + n;
 }
 
-function setBackground() {
-    let today = new Date();
-    let hour = today.getHours();
-    let numberOfImage = arrImages[hour % 6];
-
-    if (hour < 6) {
-        document.body.style.backgroundImage = `url("assets/images/night/${numberOfImage}.jpg`;
-        document.body.style.color = 'white';
-        greeting.textContent = 'Good Night, ';
-    } else if (hour < 12) {
-        document.body.style.backgroundImage = `url("assets/images/morning/${numberOfImage}.jpg`;
-        document.body.style.color = 'black';
-        greeting.textContent = 'Good Morning, ';
-    } else if (hour < 18) {
-        document.body.style.backgroundImage = `url("assets/images/day/${numberOfImage}.jpg`;
-        document.body.style.color = 'black';
-        greeting.textContent = 'Good Afternoon, ';
-    } else {
-        document.body.style.backgroundImage = `url("assets/images/evening/${numberOfImage}.jpg`;
-        document.body.style.color = 'white';
-        greeting.textContent = 'Good Evening, ';
-    }
-
-    setTimeout(setBackground, 1000);
-}
-
 function getData() {
-    if (localStorage.getItem('name') === null) {
+    if (localStorage.getItem('name') === '') {
         name.textContent = '[Enter Name]';
     } else {
         name.textContent = localStorage.getItem('name');
     }
 
-    if (localStorage.getItem('focus') === null) {
+    if (localStorage.getItem('focus') === '') {
         focus.textContent = '[Enter Focus]';
     } else {
         focus.textContent = localStorage.getItem('focus');
     }
 }
 
-name.addEventListener('click', function(event) {
+name.addEventListener('click', function() {
     if (name.textContent === '[Enter Name]') {
         name.textContent = null;
     }
 });
 
-name.addEventListener('blur', function(event) {
+name.addEventListener('blur', function() {
     if (name.textContent === '') {
         name.textContent = '[Enter Name]';
     }
@@ -94,15 +148,15 @@ name.addEventListener('keydown', function(event) {
     }
 });
 
-focus.addEventListener('click', function(event) {
-    if (focus.textContent === '[Enter Name]') {
+focus.addEventListener('click', function() {
+    if (focus.textContent === '[Enter Focus]') {
         focus.textContent = null;
     }
 });
 
-focus.addEventListener('blur', function(event) {
+focus.addEventListener('blur', function() {
     if (focus.textContent === '') {
-        focus.textContent = '[Enter Name]';
+        focus.textContent = '[Enter Focus]';
     }
 });
 
@@ -123,24 +177,40 @@ async function getJSON() {
     author.textContent = data[randomQuote].author;
 }
 
-let randomNumbers = 0;
-
+let check;
 function randomNumber(min, max) {
     let result = Math.floor(Math.random() * (max - min)) + min;
-    if (result === randomNumbers) {
-        result = Math.floor(Math.random() * (max - min)) + min;
-        randomNumbers = result; 
+    if (result !== check) {
         return result;
     } else {
-        randomNumbers = result; 
-        return result;
+        check = result;
+        return rand();
     }
 }
 
-button.addEventListener('click', function() {
-    getJSON();  
-});
+async function getWeather() {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.textContent}&lang=ru&appid=85d06021f576a4e46bc2f5084d6a6e87&units=metric`;
+    const res = await fetch(url);
+    const data = await res.json();
+    weatherIcon.className = 'weather-icon owf';
+    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+    temperature.textContent = `${data.main.temp}°C`;
+    weatherDescription.textContent = data.weather[0].description;
+}
 
+function setCity(event) {
+    if (event.code === 'Enter') {
+      getWeather();
+      city.blur();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', getWeather);
+city.addEventListener('keypress', setCity);
+
+button.addEventListener('click', getJSON);
+
+// getWeather();
 showTime();
 setBackground();
 getData();
