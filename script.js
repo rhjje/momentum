@@ -22,13 +22,13 @@ function makeDayCollection(arr) {
     let dailyCollections = [];
     for (let i = 0; i < 24; i++) {
         if (i < 6) {
-            dailyCollections.push(`url("assets/images/night/${arrImages[i % 6]}.jpg`);
+            dailyCollections.push(`url("assets/images/night/${arrImages[i % 6]}.jpg")`);
         } else if (i < 12) {
-            dailyCollections.push(`url("assets/images/morning/${arrImages[i % 6]}.jpg`);
+            dailyCollections.push(`url("assets/images/morning/${arrImages[i % 6]}.jpg")`);
         } else if (i < 18) {
-            dailyCollections.push(`url("assets/images/day/${arrImages[i % 6]}.jpg`);
+            dailyCollections.push(`url("assets/images/day/${arrImages[i % 6]}.jpg")`);
         } else {
-            dailyCollections.push(`url("assets/images/evening/${arrImages[i % 6]}.jpg`); 
+            dailyCollections.push(`url("assets/images/evening/${arrImages[i % 6]}.jpg")`); 
         }
     }
     
@@ -36,6 +36,14 @@ function makeDayCollection(arr) {
 }
 
 let dailyCollections = makeDayCollection(arrImages);
+
+document.addEventListener('DOMContentLoaded', function() {
+    let preload = [];
+    for (let i = 0; i < dailyCollections.length; i++) {
+        preload[i] = new Image();
+        preload[i].src = dailyCollections[i].slice(5, -2);
+    }
+});
 
 function setBackground() {
     let today = new Date();
@@ -58,7 +66,8 @@ setBackground();
 function setTime() {
     let today = new Date();
     let min = today.getMinutes();
-    if (min === 0) {
+    let sec = today.getSeconds();
+    if (min === 0 && sec === 0) {
         setBackground();
     } 
 
@@ -88,7 +97,6 @@ function setBackgroundSliders() {
     if (hour + count > 23) {
         count = -hour;
     }
-
     document.body.style.backgroundImage = dailyCollections[hour + count];
 }
 
