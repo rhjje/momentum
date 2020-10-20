@@ -60,13 +60,13 @@ function setBackground() {
 }
 
 function getData() {
-    if (localStorage.getItem('name') === '') {
+    if (localStorage.getItem('name') === null) {
         name.textContent = '[Enter Name]';
     } else {
         name.textContent = localStorage.getItem('name');
     }
 
-    if (localStorage.getItem('focus') === '') {
+    if (localStorage.getItem('focus') === null) {
         focus.textContent = '[Enter Focus]';
     } else {
         focus.textContent = localStorage.getItem('focus');
