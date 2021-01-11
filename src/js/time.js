@@ -1,4 +1,4 @@
-import app from './background';
+import background from './background';
 
 const time = document.querySelector('.time');
 const date = document.querySelector('.date');
@@ -14,7 +14,7 @@ const showTime = () => {
   const min = today.getMinutes();
   const sec = today.getSeconds();
   if (min === 0 && sec === 0) {
-    app.setBackground();
+    background.setBackground();
   }
 
   time.innerText = `${hour}:${+min < 10 ? '0' : ''}${min}:${+sec < 10 ? '0' : ''}${sec}`;

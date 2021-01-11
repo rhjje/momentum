@@ -4,6 +4,7 @@ const background = {
   countSliders: 0,
   slideLeft: null,
   slideRight: null,
+  today: new Date(),
 
   init() {
     const arrImages = ['01', '02', '03', '04', '05',
@@ -38,21 +39,20 @@ const background = {
       this.countSliders += 1;
       this.slideSwitch();
     });
+
     this.setBackground();
   },
 
   setBackground() {
-    const today = new Date();
-    const hour = today.getHours();
+    const hour = this.today.getHours();
 
     const img = document.createElement('img');
     img.src = `${this.currentImages[hour].slice(5, -2)}`;
 
-    img.onload = () => {
+    img.addEventListener('load', () => {
       document.body.style.backgroundImage = this.currentImages[hour];
-    };
+    });
 
-    document.body.style.color = 'white';
     if (hour < 6) {
       this.greeting.textContent = 'Good Night, ';
     } else if (hour < 12) {
@@ -65,8 +65,7 @@ const background = {
   },
 
   slideSwitch() {
-    const today = new Date();
-    const hour = today.getHours();
+    const hour = this.today.getHours();
     if (hour + this.countSliders < 0) {
       this.countSliders = 23 - hour;
     }
@@ -77,9 +76,9 @@ const background = {
     const img = document.createElement('img');
     img.src = `${this.currentImages[hour + this.countSliders].slice(5, -2)}`;
 
-    img.onload = () => {
+    img.addEventListener('load', () => {
       document.body.style.backgroundImage = this.currentImages[hour + this.countSliders];
-    };
+    });
 
     this.slideLeft.disabled = true;
     this.slideRight.disabled = true;
