@@ -1,0 +1,101 @@
+.main-content {
+  margin: auto;
+}
+
+.time {
+  font-size: 13rem;
+}
+
+.date {
+  font-size: 3.2rem;
+}
+
+.greeting-container {
+  margin-top: 15px;
+  span {
+    font-size: 3.2rem;
+  }
+  div {
+    font-size: 3.2rem;
+  }
+}
+
+.focus-title {
+  margin-top: 20px;
+  font-size: 2.8rem;
+  opacity: 0.8;
+}
+
+.focus {
+  opacity: 0.8;
+  font-size: 2.8rem;
+}
+
+.name,
+.focus,
+.city {
+  display: inline-block;
+  min-width: 40px;
+}
+
+@media screen and (max-width: 1080px) {
+  .time {
+    font-size: 12rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .time {
+    font-size: 10rem;
+  }
+
+  .date {
+    font-size: 3rem;
+  }
+
+  .greeting-container {
+    span {
+      font-size: 3rem;
+    }
+    div {
+      font-size: 3rem;
+    }
+  }
+
+  .focus-title {
+    font-size: 2.6rem;
+  }
+  
+  .focus {
+    font-size: 2.6rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .time {
+    font-size: 7.2rem;
+  }
+
+  .date {
+    font-size: 2.6rem;
+  }
+
+  .greeting-container {
+    margin-top: 10px;
+    span {
+      font-size: 2.6rem;
+    }
+    div {
+      font-size: 2.6rem;
+    }
+  }
+
+  .focus-title {
+    margin-top: 10px;
+    font-size: 2rem;
+  }
+  
+  .focus {
+    font-size: 2rem;
+  }
+}

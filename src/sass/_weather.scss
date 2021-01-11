@@ -1,0 +1,31 @@
+.weather {
+  align-self: flex-end;
+  min-width: 200px;
+  margin: 15px 30px 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.temperature-info, .weather-description, .humidity, .wind {
+  margin-left: auto;
+  font-size: 1.6rem;
+}
+
+.humidity-info, .wind-info {
+  font-size: 1.6rem;
+}
+
+.weather-icon {
+  float: left;
+}
+
+.temperature {
+  width: 50px;
+  margin-left: 15px;
+  font-size: 1.6rem;
+}
+
+.city {
+  margin-left: auto;
+  font-size: 2rem;
+}
