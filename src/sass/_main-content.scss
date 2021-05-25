@@ -2,6 +2,11 @@
   margin: auto;
 }
 
+.date, .greeting, .name, .focus-title, .focus {
+  text-shadow: black 1px 1px 0, black -1px -1px 0, 
+  black -1px 1px 0, black 1px -1px 0;
+}
+
 .time {
   font-size: 13rem;
 }

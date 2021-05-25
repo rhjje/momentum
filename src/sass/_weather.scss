@@ -6,6 +6,12 @@
   flex-direction: column;
 }
 
+.temperature, .weather-description, .humidity, .wind, .city {
+  text-shadow: black 0.7px 0.7px 0, black -0.7px -0.7px 0, 
+  black -0.7px 0.7px 0, black 0.7px -0.7px 0;
+  letter-spacing: 1.5px;
+}
+
 .temperature-info, .weather-description, .humidity, .wind {
   margin-left: auto;
   font-size: 1.6rem;
