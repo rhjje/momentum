@@ -14,4 +14,7 @@ Open http://localhost:8000 to view it in the browser.
 
 ` $ npm  run build `  
 
-Builds the app for production to the ` dist ` folder.
+Builds the app for production to the ` dist ` folder.  
+
+![screencapture-momentum-rhjje-netlify-app-2021-06-15-17_12_15](https://user-images.githubusercontent.com/70751993/122069002-82cfab80-cdfd-11eb-8713-de772ba5e815.png)
+
